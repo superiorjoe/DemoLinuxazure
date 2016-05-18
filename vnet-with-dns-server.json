@@ -1,0 +1,128 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "Description": "The region to deploy the resources into"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Virtual Network to Create"
+      }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the new VNET in CIDR format"
+      },
+	  "defaultValue":"192.168.0.0/16"
+    },
+    "subnetPresentationName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet created in the new VNET"
+      }
+    },
+	 "subnetProcessingName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet created in the new VNET"
+      },
+    },
+     "subnetDataName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet created in the new VNET"
+      }
+    },
+     "subnetAuthenticationName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet created in the new VNET"
+      },
+    },
+    "PresentationPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      },
+	  "defaultValue":"192.168.1.0/24"
+    },
+	"ProcessingPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      },
+	  "defaultValue":"192.168.2.0/24"
+	  
+    },
+	"DataPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      },
+	  "defaultValue":"192.168.3.0/24"
+    },
+	"AuthenticationPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The address range of the subnet created in the new VNET"
+      },
+	  "defaultValue":"192.168.4.0/24"
+    },
+    "DNSServerAddress": {
+      "type": "array",
+      "metadata": {
+        "Description": "The DNS address(es) of the DNS Server(s) used by the VNET"
+      }
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('virtualNetworkName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('addressPrefix')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": "[parameters('DNSServerAddress')]"
+        },
+        "subnets": [
+           {
+				"name": "[variables('subnetPresentationName')]",
+				"properties": {
+					"addressPrefix": "[variables('PresentationPrefix')]"
+				}
+			},
+			{
+				"name": "[parameters('subnetProcessingName')]",
+				"properties": {
+					"addressPrefix": "[variables('ProcessingPrefix')]"
+				}
+			},
+			{
+				"name": "[variables('subnetDataName')]",
+				"properties": {
+					"addressPrefix": "[variables('DataPrefix')]"
+				}
+			},
+			{
+				"name": "[variables('subnetAuthenticationName')]",
+				"properties": {
+					"addressPrefix": "[variables('AuthenticationPrefix')]"
+				}
+			}
+        ]
+      }
+    }
+  ]
+}
