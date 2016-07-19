@@ -1,4 +1,3 @@
-
 #!/bin/bash
 NewPartition='n'
 Primary='p'
