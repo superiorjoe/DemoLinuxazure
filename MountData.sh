@@ -10,5 +10,5 @@ w
 EOF
 mkfs -t ext4 /dev/sdc1
 mkdir /datadrive
-sudo mount /dev/sdc1 /datadrive 
-ls /datadrive/ 
+sudo mount /dev/sdc1 /datadrive 
+ls /datadrive
